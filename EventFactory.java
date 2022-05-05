@@ -17,6 +17,7 @@ import edu.skidmore.cs326.spring2022.skribbage.logic.events.LogicFactoryTemplate
  * from the metadata given in EventType enum.
  *
  * @author Sten Leinasaar
+ * @author Alex Carney 
  * Last Edit: April 19, 2022
  */
 public final class EventFactory implements EventDispatcher {
@@ -51,7 +52,6 @@ public final class EventFactory implements EventDispatcher {
      * EventFactory private constructor.
      */
     private EventFactory() {
-        // eventManager = EventManager.getInstance();
         templates = Arrays.asList(
             new LogicFactoryTemplate(), new GamificationFactoryTemplate(),
             new FrontEndFactoryTemplate(),
@@ -71,7 +71,8 @@ public final class EventFactory implements EventDispatcher {
     /**
      * Creates an event of type PropertyChangeEvent based on the
      * EventType enum value being passed.
-     *
+     * 
+     * @author Alex Carney 
      * @param event  Type of an event as specified from the ENUM.
      * @param source Source that fired the update.
      * @param args   Vararg of Object type.
@@ -112,7 +113,7 @@ public final class EventFactory implements EventDispatcher {
         }
 
         LOG.error("Event not found");
-        // throw new Exception("Event Not Found");
+        throw new Exception("Event Not Found");
         return null;
 
     }
