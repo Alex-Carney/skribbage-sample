@@ -83,6 +83,7 @@ public final class EventFactory implements EventDispatcher {
         Object... args) {
         Object[] eventArgumentList = event.getArgumentList();
 
+        //Uses the Java Reflections API to ensure arguments match what is expected 
         for (int i = 0; i < eventArgumentList.length; i++) {
             Class<?> clazz = args[i].getClass();
             if (clazz != eventArgumentList[i]) {
@@ -92,6 +93,8 @@ public final class EventFactory implements EventDispatcher {
                     "Argument data types do not match enum. "
                         + clazz + " does not match " + eventArgumentList[i]);
             }
+            //Data transfer payloads implement the payload marker interface. Violations
+            //of this will not throw an exception, but are not recommended 
             if (!Arrays.asList(clazz.getInterfaces()).contains(Payload.class)) {
                 LOG.error("Warning: Using non payload, argument type " + clazz);
             }
@@ -101,6 +104,8 @@ public final class EventFactory implements EventDispatcher {
         LOG.debug(
             "Calling createEvent from each subclass "
                 + "with their overWritten hook method.");
+        //In order to prevent merge conflicts, each team implements their event factories
+        //in their respective factory template, instead of all editing this file. 
         for (FactoryTemplate subclass : templates) {
             temp = subclass.createEvent(event, source, args);
             if (temp != null) {
